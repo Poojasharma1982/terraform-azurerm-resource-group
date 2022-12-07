@@ -1,0 +1,14 @@
+import "tfplan-functions" as plan
+
+#list of approved regions
+approved_regions = ["eastus2", "centralus"]
+
+allFunctionsApp = plan.find_resources("azurerm_function_app")
+violatingResources = plan.filter_attribute_not_in_list(allFunctionsApp, "location", approved_regions, true)
+
+print("Policy Validation Rule - Ensure Only AMX Azure allowed regions are assigned regions for Azure Funstions App respources")
+
+# Main Rule
+main = rule {
+	length(violatingResources["messages"]) is 0
+}
