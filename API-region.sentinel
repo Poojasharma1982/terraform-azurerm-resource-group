@@ -1,0 +1,16 @@
+import "tfplan-functions" as plan
+import "custom-functions" as custom
+
+#list of approved locations
+allowedLocations = ["eastus2", "centralus"]
+
+allApiManagementResources = custom.filter_custom_resources("azurerm_api_management(.*)")
+
+violatingApiResources = plan.filter_attribute_not_in_list(allApiManagementResources, "location", allowedLocations, true)
+
+print("Policy Validation Rule - Ensure Azure API Management service resources should be deployed in approved Azure regions.")
+
+# Main Rule
+main = rule {
+	length(violatingApiResources["messages"]) is 0
+}
