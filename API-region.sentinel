@@ -11,6 +11,6 @@ allApiManagementResources = custom.filter_custom_resources("azurerm_api_manageme
 print("Policy Validation Rule - Ensure Azure API Management service resources should be deployed in approved Azure regions.")
 
 # Main Rule
-main = rule 
+main = rule {
 	length(violatingApiResources["messages"]) is 0
 }
