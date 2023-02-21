@@ -12,5 +12,5 @@ print("Policy Validation Rule - Ensure Azure API Management service resources sh
 
 # Main Rule
 main = rule {
-	length(violatingApiResources["messages"]) is 0
+	length(violatingApiResources["messages"])
 }
